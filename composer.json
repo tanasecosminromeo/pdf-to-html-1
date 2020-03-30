@@ -1,8 +1,8 @@
 {
-    "name": "wbrframe/pdftohtml",
+    "name": "wbrframe/pdf-to-html",
     "description": "PDF to HTML converter with PHP using poppler-utils",
-    "keywords": ["poppler-utils", "pdftohtml"],
-    "homepage": "https://github.com/wbrframe/pdftohtml",
+    "keywords": ["poppler-utils", "pdftohtml", "php"],
+    "homepage": "https://github.com/wbrframe/pdf-to-html",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -12,6 +12,9 @@
             "role": "Creator"
         }
     ],
+    "require": {
+        "php": "^7.0"
+    },
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
