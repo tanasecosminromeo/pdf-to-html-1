@@ -1,5 +1,6 @@
 .idea
 data
 docker-configs
-/vendor/
+output
+vendor
 index.php

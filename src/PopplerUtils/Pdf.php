@@ -32,18 +32,19 @@ class Pdf
 
     /**
      * @param string      $inputFilePath
+     * @param string|null $outputFolder
      * @param string|null $binPath
      *
      * @throws RuntimeException
      */
-    public function __construct(string $inputFilePath, string $binPath = null)
+    public function __construct(string $inputFilePath, string $outputFolder = null, string $binPath = null)
     {
         if (!$this->commandExists()) {
             throw new RuntimeException('Before use the library, install poppler-utils');
         }
 
         $this->inputFilePath = $inputFilePath;
-        $this->outputFilePath = \sprintf('%s/%s.html', $this->createOutputFolder(), \uniqid('', true));
+        $this->outputFilePath = $this->prepareOutputFilePath($outputFolder);
         $this->binPath = $binPath ?? self::DEFAULT_PDFTOHTML_BIN_PATH;
     }
 
@@ -83,6 +84,18 @@ class Pdf
     private function commandExists(): bool
     {
         return \is_executable(self::DEFAULT_PDFTOHTML_BIN_PATH);
+    }
+
+    /**
+     * @param string|null $outputFolder
+     *
+     * @return string
+     */
+    private function prepareOutputFilePath(string $outputFolder = null): string
+    {
+        $outputFolder = $outputFolder ?? $this->createOutputFolder();
+
+        return \sprintf('%s/%s.html', $outputFolder, \uniqid('', true));
     }
 
     /**
