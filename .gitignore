@@ -1,3 +1,5 @@
+.idea
+data
+docker-configs
 /vendor/
 index.php
-data
