@@ -51,8 +51,10 @@ $crawler = $html->createCrawler();
 ?>
 ```
 
-You can change some options like is `outputFolder` and  `outputFilePath`, where an option `outputFolder` is folder were HTML will be created and
- `outputFilePath` is absolute path for HTML file that you want to create.
+You can change some options like is `outputFolder`, `outputFilePath` and `binPath`, where an option `outputFolder` is folder were HTML will be created,
+ `outputFilePath` is absolute path for HTML file that you want to create, `binPath` is path to `pdftohtml`
+
+NOTE: If `outputFilePath` is specified, option an `outputFolder` is was be missed.
 
 ```php
 <?php
@@ -66,6 +68,7 @@ include 'vendor/autoload.php';
 $converterFactory = new ConverterFactory('test.pdf');
 
 $options = (new PdfToHtmlOptions())
+    ->setBinPath('/path/pdftohtml')
     ->setOutputFolder('/app/output')
     ->setOutputFilePath('/app/output/file.html')
 ;
