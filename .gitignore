@@ -3,4 +3,5 @@ data
 docker-configs
 output
 vendor
+.php_cs.cache
 index.php
