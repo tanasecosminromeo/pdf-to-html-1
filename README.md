@@ -1,13 +1,14 @@
 # PDF to HTML PHP Class (only for Linux)
 
-A small wrapper for Linux, which allows you to convert pdf files to html.
+PDF to HTML converter with PHP using tools, like poppler-utils.
+Currently only supported poppler-utils.
 
-## Important Notes
+# Important 
 
-The package is still in development. Currently has the following restrictions:
-- only for Linux;
-- `pdftohtml` executing with next params: `-s -i -noframes`
-- output HTML file creating in `/<system_temp_dir>/pdf-to-html/`. Example: `/tmp/pdf-to-html/5e82b7db72e674.60365088.html`
+PdfToHtml from package poppler-utils always executing with next flags:
+* `-s` # single file
+* `-i` # without images
+* `-noframes` # without iframe
 
 ## Installation
 
@@ -24,25 +25,53 @@ composer req wbrframe/pdf-to-html
 
 ## Usage
 
-Here is the sample.
+In this example HTML file will be created in system temporary folder with in subfolder `output` a random name.
+Example: `/tmp/output/5e8671ec8e0283.34152860.html`
 
 ```php
 <?php
+
+use Wbrframe\PdfToHtml\Converter\ConverterFactory;
+
 // if you are using composer, just use this
 include 'vendor/autoload.php';
 
 // initiate
-$pdf = new Wbrframe\PdfToHtml\PopplerUtils\Pdf('example.pdf');
+$converterFactory = new ConverterFactory('test.pdf');
+$converter = $converterFactory->createPdfToHtml();
 
-// get a path for an output HTML file
-$htmlFile = $pdf->getOutputHtmlFilePath();
+$html = $converter->createHtml();
+
+// Get absolute path created HTML file
+$htmlFilePath = $html->getFilePath();
+
+// or get Crawler (symfony/dom-crawler)
+$crawler = $html->createCrawler();
+ 
 ?>
 ```
 
-You can change the path to `phptohtml` passing the second argument.
+You can change some options like is `outputFolder` and  `outputFilePath`, where an option `outputFolder` is folder were HTML will be created and
+ `outputFilePath` is absolute path for HTML file that you want to create.
 
 ```php
 <?php
-$pdf = new Wbrframe\PdfToHtml\PopplerUtils\Pdf('example.pdf', '/new/path/pdftohtml');
+
+use Wbrframe\PdfToHtml\Converter\ConverterFactory;
+use Wbrframe\PdfToHtml\Converter\PopplerUtils\PdfToHtmlOptions;
+
+// if you are using composer, just use this
+include 'vendor/autoload.php';
+
+$converterFactory = new ConverterFactory('test.pdf');
+
+$options = (new PdfToHtmlOptions())
+    ->setOutputFolder('/app/output')
+    ->setOutputFilePath('/app/output/file.html')
+;
+
+$converter = $converterFactory->createPdfToHtml($options);
+
+$html = $converter->createHtml();
 ?>
 ```
